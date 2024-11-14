@@ -1,0 +1,135 @@
+def get_user_name():
+        try:
+            
+        except ObjectDoesNotExist:
+            cc_user_list = None
+        return cc_user_list
+from csv import writer
+with open('adolescent_untrust_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    for i in adolescent_ids:
+        try:
+            cc_user_list = CC_AWC_AH.objects.filter(status=1, awc=i.awc, user__id__in=user_sites).first().user.username
+        except:
+            cc_user_list = 'not assent'
+        writer_object.writerow([i.id,i.name,i.get_gender_display(),i.age_in_completed_years,i.code,i.awc.id,i.awc.name,i.awc.get_status_display(),i.awc.village.id,i.awc.village.name,i.awc.village.grama_panchayat.id,i.awc.village.grama_panchayat.name,i.awc.village.grama_panchayat.block.id,i.awc.village.grama_panchayat.block.name, cc_user_list])
+    f_object.close()
+
+from csv import writer
+with open('village_locations.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    for i in village_location:
+        writer_object.writerow([i.id,i.name,i.code,i.subcenter.id,i.subcenter.name,i.subcenter.code,i.subcenter.phc.id,
+        i.subcenter.phc.name,i.subcenter.phc.code,i.subcenter.phc.taluk.id,
+        i.subcenter.phc.taluk.name,i.subcenter.phc.taluk.code,i.subcenter.phc.taluk.district.id,
+        i.subcenter.phc.taluk.district.name,i.subcenter.phc.taluk.district.code,i.subcenter.phc.taluk.district.state.id,i.subcenter.phc.taluk.district.state.name,i.subcenter.phc.taluk.district.state.code])
+    f_object.close()
+
+
+from mis.models import *
+from application_masters.models import *
+from csv import writer
+from django.utils.timezone import localtime
+from datetime import datetime
+cc_user = User.objects.filter(groups__id=1).values_list('id', flat=True)
+user_site_id = UserSiteMapping.objects.filter(status=1, user__id__in=cc_user, site_id=3).values_list('user__id', flat=True)
+ads = Adolescent.objects.filter(site=3, status=1)
+with open('adolescent_rnp_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['Adolescent ID', 'Adolescent Name', 'Gender', 'Age', 'Adolescent Code', 'Created On', 'AWC ID', 'AWC Name', 'AWC Status', 'Village ID', 'Village Name', 'Grama Panchayat ID', 'Grama Panchayat Name', 'Block ID', 'Block Name', 'User Name'])
+    for i in ads:
+        try:
+            cc_awc_id = CC_AWC_AH.objects.filter(status=1, awc=i.awc, user__id__in=user_site_id).first().user.username
+            writer_object.writerow([i.id,i.name,i.get_gender_display(),i.age_in_completed_years,i.code, localtime(i.server_created_on).strftime("%Y-%m-%d"), i.awc.id,i.awc.name,i.awc.get_status_display(),i.awc.village.id,i.awc.village.name,i.awc.village.grama_panchayat.id,i.awc.village.grama_panchayat.name,i.awc.village.grama_panchayat.block.id,i.awc.village.grama_panchayat.block.name, cc_awc_id])
+        except:
+            cc_awc_id = 'not assent'
+    f_object.close()
+
+cc_user = User.objects.filter(groups__id=1).values_list('id', flat=True)
+user_site_id = UserSiteMapping.objects.filter(status=1, user__id__in=cc_user, site_id=4).values_list('user__id', flat=True)
+ads = Adolescent.objects.filter(site=4, status=1)
+with open('adolescent_untrust_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['Adolescent ID', 'Adolescent Name', 'Gender', 'Age', 'Adolescent Code', 'Created On', 'AWC ID', 'AWC Name', 'AWC Status', 'Village ID', 'Village Name', 'Grama Panchayat ID', 'Grama Panchayat Name', 'Block ID', 'Block Name', 'User Name'])
+    for i in ads:
+        try:
+            cc_awc_id = CC_AWC_AH.objects.filter(status=1, awc=i.awc, user__id__in=user_site_id).first().user.username, 'User Name'
+            writer_object.writerow([i.id,i.name,i.get_gender_display(),i.age_in_completed_years,i.code, localtime(i.server_created_on).strftime("%Y-%m-%d"), i.awc.id,i.awc.name,i.awc.get_status_display(),i.awc.village.id,i.awc.village.name,i.awc.village.grama_panchayat.id,i.awc.village.grama_panchayat.name,i.awc.village.grama_panchayat.block.id,i.awc.village.grama_panchayat.block.name, cc_awc_id])
+        except:
+            cc_awc_id = 'not assent'
+    f_object.close()
+
+
+import pandas as pd
+pf = pd.read_excel(r'/home/sb-010/Downloads/Copy of Enrolment date for adolescents1.xlsx')
+for p in pf.iterrows():
+    ads = Adolescent.objects.filter(id=p[1]['Adolescent ID'], status=1)
+    if ads:
+        Adolescent.objects.filter(id=p[1]['Adolescent ID']).update(enrolment_date=p[1]['Enrollment date '])
+
+from django.db.models import Count
+from application_masters.models import *
+from mis.models import *
+from csv import writer
+cc_uts = CC_AWC_AH.objects.values('awc_id').annotate(Count('id')) .order_by().filter(user__username__icontains='untrustcc', status=1, id__count__gt=1)
+cc_rnps = CC_AWC_AH.objects.values('awc_id').annotate(Count('id')) .order_by().filter(user__username__icontains='rnpcc', status=1, id__count__gt=1)
+untrusts = CC_AWC_AH.objects.filter(user__username__icontains='untrustcc', status=1,awc_id__in=[uts['awc_id'] for uts in cc_uts])
+rnps = CC_AWC_AH.objects.filter(user__username__icontains='rnpcc', status=1,awc_id__in=[rnp['awc_id'] for rnp in cc_rnps])
+adl_uts = Adolescent.objects.filter(awc_id__in=untrusts.values_list('awc_id', flat=True), status=1, site=4)
+adl_rnps = Adolescent.objects.filter(awc_id__in=rnps.values_list('awc_id', flat=True), status=1, site=3)
+with open('untrust_linkage_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['User Name', 'AWC Name', 'AWC ID', 'Status'])
+    for i in untrusts:
+        writer_object.writerow([i.user.username, i.awc.name, i.awc_id, i.get_status_display()])
+    f_object.close()
+    
+with open('rnp_linkage_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['User Name', 'AWC Name', 'AWC ID', 'Status'])
+    for i in untrusts:
+        writer_object.writerow([i.user.username, i.awc.name, i.awc_id, i.get_status_display()])
+    f_object.close()
+
+with open('duplicate_adolescent_untrust_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['Adolescent ID', 'Adolescent Name', 'Gender', 'Age', 'Adolescent Code', 'Created On', 'AWC ID', 'AWC Name', 'AWC Status', 'Village ID', 'Village Name', 'Grama Panchayat ID', 'Grama Panchayat Name', 'Block ID', 'Block Name'])
+    for i in adl_uts:
+        writer_object.writerow([i.id,i.name,i.get_gender_display(),i.age_in_completed_years,i.code, localtime(i.server_created_on).strftime("%Y-%m-%d"), i.awc.id,i.awc.name,i.awc.get_status_display(),i.awc.village.id,i.awc.village.name,i.awc.village.grama_panchayat.id,i.awc.village.grama_panchayat.name,i.awc.village.grama_panchayat.block.id,i.awc.village.grama_panchayat.block.name])
+    f_object.close()
+
+with open('duplicate_adolescent_rnp_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['Adolescent ID', 'Adolescent Name', 'Gender', 'Age', 'Adolescent Code', 'Created On', 'AWC ID', 'AWC Name', 'AWC Status', 'Village ID', 'Village Name', 'Grama Panchayat ID', 'Grama Panchayat Name', 'Block ID', 'Block Name'])
+    for i in adl_rnps:
+        writer_object.writerow([i.id,i.name,i.get_gender_display(),i.age_in_completed_years,i.code, localtime(i.server_created_on).strftime("%Y-%m-%d"), i.awc.id,i.awc.name,i.awc.get_status_display(),i.awc.village.id,i.awc.village.name,i.awc.village.grama_panchayat.id,i.awc.village.grama_panchayat.name,i.awc.village.grama_panchayat.block.id,i.awc.village.grama_panchayat.block.name])
+    f_object.close()
+
+from application_masters.models import *
+from django.db.models import Count
+from csv import writer
+adl_rnp = Adolescent.objects.values('name','awc_id').annotate(Count('id')) .order_by().filter(status=1, site=3, id__count__gt=1)
+adl_untrust = Adolescent.objects.values('name', 'awc_id').annotate(Count('id')) .order_by().filter(status=1, site=4, id__count__gt=1)
+adl_uts = Adolescent.objects.filter(awc_id__in=[rnp['awc_id'] for rnp in adl_rnp], name__in=[rnp['name'] for rnp in adl_rnp], status=1, site=3)
+adl_rnps = Adolescent.objects.filter(awc_id__in=[uts['awc_id'] for uts in adl_untrust], name__in=[uts['name'] for uts in adl_untrust], status=1, site=4)
+
+with open('repeated_adolescent_untrust_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['Adolescent ID', 'Adolescent Name', 'Gender', 'Age', 'Adolescent Code', 'Created On', 'AWC ID', 'AWC Name', 'AWC Status', 'Village ID', 'Village Name', 'Grama Panchayat ID', 'Grama Panchayat Name', 'Block ID', 'Block Name'])
+    for i in adl_uts:
+        writer_object.writerow([i.id,i.name,i.get_gender_display(),i.age_in_completed_years,i.code, localtime(i.server_created_on).strftime("%Y-%m-%d"), i.awc.id,i.awc.name,i.awc.get_status_display(),i.awc.village.id,i.awc.village.name,i.awc.village.grama_panchayat.id,i.awc.village.grama_panchayat.name,i.awc.village.grama_panchayat.block.id,i.awc.village.grama_panchayat.block.name])
+    f_object.close()
+
+with open('repeated_adolescent_rnp_list.csv', 'a') as f_object:
+    writer_object = writer(f_object)
+    writer_object.writerow(['Adolescent ID', 'Adolescent Name', 'Gender', 'Age', 'Adolescent Code', 'Created On', 'AWC ID', 'AWC Name', 'AWC Status', 'Village ID', 'Village Name', 'Grama Panchayat ID', 'Grama Panchayat Name', 'Block ID', 'Block Name'])
+    for i in adl_rnps:
+        writer_object.writerow([i.id,i.name,i.get_gender_display(),i.age_in_completed_years,i.code, localtime(i.server_created_on).strftime("%Y-%m-%d"), i.awc.id,i.awc.name,i.awc.get_status_display(),i.awc.village.id,i.awc.village.name,i.awc.village.grama_panchayat.id,i.awc.village.grama_panchayat.name,i.awc.village.grama_panchayat.block.id,i.awc.village.grama_panchayat.block.name])
+    f_object.close()
+
+
+from mis.models import *
+ah_session = AHSession.objects.filter(status=1, date_of_session__year__in=['0022','0222'])
+for ahs in ah_session:
+    print(ahs.date_of_session.strftime("2022-%m-%d"),type(ahs.date_of_session.strftime("2022-%m-%d")))
+    AHSession.objects.filter(status=1, id=ahs.id).update(date_of_session=ahs.date_of_session.strftime("2022-%m-%d"))

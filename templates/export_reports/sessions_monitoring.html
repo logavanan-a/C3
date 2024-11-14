@@ -1,0 +1,61 @@
+<!--Section 12-->
+<!--Details of sessions monitoring and handholding support at block level  -->
+
+<div class="row" id="rpos-11">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}12{% elif current_site == 3 %}11{% else %}14{% endif %}:</h4>
+                    <p class="card-title-desc">Details of sessions monitoring and handholding support at block level  </p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="sessions_monitoring" class="btn btn-primary waves-effect justify-content-start" value="sessions_monitoring">
+                             Export
+                        </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>  
+                                    <th>Date</th>
+                                    <th>Name of Block</th>
+                                    <th>Name of panchayat</th>
+                                    <th>Name of Village/School/AWC visited</th>
+                                    <th>Sessions attended </th>
+                                    <th>Observation</th>
+                                    <th>Recommendation</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in sessions_monitoring %}
+                                <tr>
+                                    <th>{{s.task.user}}</th>
+                                    <td>{{s.task.start_date|date:"F Y"}}</td>
+                                    <td>{{s.date}}</td>
+                                    <td>{% if s.name_of_visited == 1 %}{{s.content_object.grama_panchayat.block|default:"Not applicable"}}{% else %}{{s.content_object.village.grama_panchayat.block|default:"Not applicable"}}{% endif %}</td>
+                                    <td>{% if s.name_of_visited == 1 %}{{s.content_object.grama_panchayat|default:"Not applicable"}}{% else %}{{s.content_object.village.grama_panchayat|default:"Not applicable"}}{% endif %}</td>
+                                    <td>{{s.content_object|default_if_none:""}}{{s.name_of_place_visited|default_if_none:""}}</td>
+                                    <td>{{s.session_attended}}</td>
+                                    <td>{{s.observation}}</td>
+                                    <td>{{s.recommendation}}</td>  
+                                    <td>{{s.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

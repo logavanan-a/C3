@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extra_css %}
+<!-- Responsive Table css -->
+<link href="{% static 'libs/admin-resources/rwd-table/rwd-table.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block contents %}
+<style>
+    .table>thead { vertical-align: top}
+    .card-title{ margin-right: 5px }
+</style>
+<div class="row align-items-center">
+    <div class="col-xl-12 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form class="needs-validation form-horizontal" enctype="multipart/form-data" novalidate  method="GET" id="filters">
+                    <div class="row">
+                        {% comment %}<div class="col-md-4">  
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Reports :</label>
+                                <select class="select2 form-control select2-multiple state block" multiple="multiple"  id="reports" name='reports' >
+                                    {% for s in section_order %}
+                                    <option value="{{s.report_title}}" {% if s.report_title in reports %}selected{% elif s.report_title == export %}selected{% elif request.GET.reports|default_if_none:'' == '' and s.report_title == 'session_1' %}selected{% endif %}>{{s.report_title}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>{% endcomment %}
+                        <div class="col-md-4">  
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Reports :</label>
+                                <select class="select2 form-control"   id="reports" name='reports' >
+                                    {% for s in section_order %}
+                                    <option value="{{s.report_title}}" {% if s.report_title == reports or s.report_title == export %}selected{% elif  s.report_title == 'session_1' %}selected{% endif %}>{{s.report_title}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <label for="floatingnameInput">Start date:</label>
+                            <input type="month" class="form-control" name='start_filter'  value="{{start_filter}}" id="start_filter" onchange='onselected_start_month(this)' onkeyup="month();">
+                            <div class="invalid-feedback">
+                                Please provide a valid both date field.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="floatingnameInput">End date:</label>
+                            <input type="month" class="form-control" name='end_filter' value="{{end_filter}}" id="end_filter" onchange='onselected_start_month(this)'>
+                            <div class="invalid-feedback">
+                                Please provide a valid both date field and Start date should be greater than or equal to end date.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end mt-3">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-square btn-success btn-lg float-right">Filter</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" id="reset" class="btn btn-square btn-primary btn-lg float-right">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% for s in section_order %}
+<div class="{{s.report_title}} report">
+    {% with my_url=s.report_slug %}
+        {% include my_url %}
+    {% endwith %}
+</div>
+{% endfor %}
+
+
+
+
+{% endblock %}
+{% block extra_javascript %}
+        <!-- Responsive Table js -->
+        <script src="{% static 'libs/admin-resources/rwd-table/rwd-table.min.js' %}"></script>
+
+        <!-- Init js -->
+        {% comment %} <script src="{% static 'js/pages/table-responsive.init.js' %}"></script> {% endcomment %}
+        <script type="text/javascript">
+           
+            $("#reset").click(function() {
+                $('#reports').prop('selectedIndex', 'session_1').change();
+                $('#start_filter').val('');
+                $('#end_filter').val('');
+                this.form.submit();
+            });
+            $("#start_filter").on("change", function(event){
+                   document.getElementById("end_filter").min=$("#start_filter").val()
+           });
+           function onselected_start_month(){
+               var start_month = document.getElementById("start_filter");
+               var end_month = document.getElementById("end_filter");
+               if (start_month != '' && end_month != ''){
+                   document.querySelector('#start_filter').required = true;
+                   document.querySelector('#end_filter').required = true;
+               }
+               else{
+                   document.querySelector('#start_filter').required = false;
+                   document.querySelector('#end_filter').required = false;
+                  
+               }  
+        
+           }
+        </script>
+        <script>
+            $(document).ready(function(){
+                $("select").change(function(){
+                    $(this).find("option:selected").each(function(){
+                        var optionValue = $(this).attr("value");
+                        if(optionValue){
+                            $(".report").not("." + optionValue).hide();
+                            $("." + optionValue).show();
+                        } else{
+                            $(".report").hide();
+                        }
+                    });
+                }).change();
+            });
+            </script>
+{% endblock %}

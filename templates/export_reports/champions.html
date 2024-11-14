@@ -1,0 +1,71 @@
+<!--Section 8-->
+<!--Details of exposure visits of adolescent champions-->
+
+<div class="row" id="rccs-8">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}9{% else %}8{% endif %}:</h4>
+                    <p class="card-title-desc">Details of exposure visits of adolescent champions</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="champions" class="btn btn-primary waves-effect justify-content-start" value="champions">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Date of Visit</th>
+                                    <th>Name of Panchayat</th>
+                                    <th>Name of Village</th>
+                                    <th>Name of AWC</th>
+                                    <th>No of Champions (Girls 10-14 year)</th>
+                                    <th>No of Champions (Girls 15-19 year)</th>
+                                    <th>No of Champions (Boys 10-14 year)</th>
+                                    <th>No of Champions (Boys 15-19 year)</th>
+                                    <th>Name of institutions visited First</th>
+                                    <th>Name of institutions visited Second</th>
+                                    <th>Name of institutions visited Third</th>
+                                    <th>Name of institutions visited Fourth</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for c in champions %}
+                                <tr>
+                                    <th>{{c.task.user}}</th>
+                                    <th>{{c.task.start_date|date:"F Y"}}</th>
+                                    <th>{{c.date_of_visit}}</th>
+                                    <th>{{c.awc_name.village.grama_panchayat}}</th>
+                                    <th>{{c.awc_name.village}}</th>
+                                    <th>{{c.awc_name}}</th>
+                                    <td>{{c.girls_10_14_year}}</td>
+                                    <td>{{c.girls_15_19_year}}</td>
+                                    <td>{{c.boys_10_14_year}}</td>
+                                    <td>{{c.boys_15_19_year}}</td>
+                                    <td>{{c.get_first_inst_visited_display}}</td>
+                                    <td>{{c.get_second_inst_visited_display|default_if_none:""}}</td>
+                                    <td>{{c.get_third_inst_visited_display|default_if_none:""}}</td>
+                                    <td>{{c.get_fourth_inst_visited_display|default_if_none:""}}</td>
+                                    <td>{{c.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

@@ -1,0 +1,73 @@
+<!--Section 6-->
+<!--Details of Adolescent Friendly Club (AFC)-->
+
+<div class="row" id="rccs-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}6{% else %}5{% endif %}:</h4>
+                    <p class="card-title-desc">Details of Adolescent Friendly Club (AFC)</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="friendly_club" class="btn btn-primary waves-effect justify-content-start" value="friendly_club">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Date</th>
+                                    <th>Name of the Panchayat</th>
+                                    <th>Name of the HSC</th>
+                                    <th>Issue/Subject</th>
+                                    <th>Name of the Facilitator</th>
+                                    <th>Designation</th>
+                                    <th>No of the Sahiya</th>
+                                    <th>No of AWW participated</th>
+                                    <th>No of PE(girls 10-14 year)</th>
+                                    <th>No of PE(girls 15-19 year)</th>
+                                    <th>No of PE(boys 10-14 year)</th>
+                                    <th>No of PE(boys 15-19 year)</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for f in friendly_club %}
+                                <tr>
+                                    <th>{{f.task.user}}</th>
+                                    <th>{{f.task.start_date|date:"F Y"}}</th>
+                                    <th>{{f.start_date|default_if_none:""}}</th>
+                                    <th>{{f.panchayat_name}}</th>
+                                    <td>{{f.hsc_name}}</td>
+                                    <td>{{f.subject}}</td>
+                                    <td>{{f.facilitator}}</td>
+                                    <td>{{f.get_designation_display}}</td>
+                                    <td>{{f.no_of_sahiya}}</td>
+                                    <td>{{f.no_of_aww}}</td>
+                                    <td>{{f.pe_girls_10_14_year}}</td>
+                                    <td>{{f.pe_girls_15_19_year}}</td>
+                                    <td>{{f.pe_boys_10_14_year}}</td>
+                                    <td>{{f.pe_boys_15_19_year}}</td>
+                                    <td>{{f.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>{% endcomment %}
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

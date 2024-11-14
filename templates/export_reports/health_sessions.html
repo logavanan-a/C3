@@ -1,0 +1,65 @@
+<!--Section 1-->
+<!--Details of transaction of sessions on health & nutrition-->
+
+<div class="row" id="rccs-1">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section 1:</h4>
+                    <p class="card-title-desc">Details of transaction of sessions on health & nutrition</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="health_sessions" class="btn btn-primary waves-effect justify-content-start" value="health_sessions">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Name of the Panchayat</th>
+                                    <th>Name of the Village</th>
+                                    <th>Name of Adolescent</th>
+                                    <th>Session name</th>
+                                    <th>Date of session</th>
+                                    <th>Session Day</th>
+                                    <th>Name of the main Facilitator</th>
+                                    <th>Gender</th>
+                                    <th>Designation</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in health_sessions %}
+                                <tr>
+                                    <th>{{s.task.user}}</th>
+                                    <th>{{s.task.start_date|date:"F Y"}}</th>
+                                    <th>{{s.adolescent_name.awc.village.grama_panchayat}}</th>
+                                    <th>{{s.adolescent_name.awc.village}}</th>
+                                    <th>{{s.adolescent_name}}</th>
+                                    <td>{{s.fossil_ah_session}}</td>
+                                    <td>{{s.date_of_session}}</td>
+                                    <td>{{s.get_session_day_display}}</td>
+                                    <td>{{s.facilitator_name}}</td>
+                                    <td>{{s.get_gender_display|default_if_none:""}}</td>
+                                    <td>{{s.get_designation_data_display}}</td>
+                                    <td>{{s.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

@@ -1,0 +1,580 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block contents %}
+<div class="row align-items-center">
+    <div class="col-xl-12 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form class="needs-validation form-horizontal" enctype="multipart/form-data" novalidate  method="GET" id="filters">
+                    <div class="row">
+                        <div class="col-md-4">  
+                            <div class="mb-3">
+                                <label for="floatingnameInput">User:</label>
+                                <select  class="form-control select2 select2-multiple user" multiple="multiple" aria-label="Floating label select example" 
+                                placeholder="Choose District" id="user_id" name='user' >      
+                                    {% for user in user_ids %}
+                                        <option value="{{user.id}}" {% if user.id|slugify in usr_ids  %}selected{% endif %}>{{user.username}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">  
+                            <div class="mb-3">
+                                <label for="floatingnameInput">District :</label>
+                                <select class="select2 form-control select2-multiple district" multiple="multiple"  id="district" name='district'>
+                                    {% for district in district_obj %}
+                                        {% for key, value in district.items %}
+                                            <option value="{{key}}" {% if key|slugify in district_ids %}selected{% endif %}>{{value}}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Block :</label>
+                                <select class="select2 form-control select2-multiple block" multiple="multiple"  id='block' name='block'>
+                                    {% for block in block_lists %}
+                                        {% for key, value in block.items %}
+                                            <option value="{{key}}" {% if key|slugify in block_ids %}selected{% endif %}>{{value}}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Grama Panchayat :</label>
+                                <select class="select2 form-control select2-multiple gramapanchayat" multiple="multiple"  id='grama_panchayat' name='grama_panchayat'>
+                                    {% for grama_panchayat in grama_panchayat_obj %}
+                                        <option value="{{grama_panchayat.id}}" {% if grama_panchayat.id|slugify in grama_panchayat_ids  %}selected{% endif %}>{{grama_panchayat.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Village :</label>
+                                <select class="select2 form-control select2-multiple village" multiple="multiple"  id='village' name='village'>
+                                    {% for village in village_obj %}
+                                        <option value="{{village.id}}" {% if village.id|slugify in village_ids %}selected{% endif %}>{{village.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">AWC :</label>
+                                <select class="select2 form-control select2-multiple awc" multiple="multiple"  id='awc' name='awc'>
+                                    {% for awc in awc_obj %}
+                                        <option value="{{awc.id}}" {% if awc.id|slugify in awc_ids  %}selected{% endif %}>{{awc.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class="row justify-content-end mt-3">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-square btn-success btn-lg float-right">Filter</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" id="reset" class="btn btn-square btn-primary btn-lg float-right">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="rccs-7">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Adolescent location mapping wise report:</h4>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values_ids.items %}
+                            {% for vlu in values %}
+                                <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{vlu}}"/>
+                            {% endfor %}
+                        {% endfor %}
+                        <button type="submit" name='export' id="export" class="btn btn-primary waves-effect justify-content-start" value="adolescent_list">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                <div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Adolescent ID</th>
+                                    <th rowspan="2">District</th>
+                                    <th rowspan="2">Block</th>
+                                    <th rowspan="2">Panchayat</th>
+                                    <th rowspan="2">Village</th>
+                                    <th rowspan="2">Name of CC</th>
+                                    <th rowspan="2">Anganwadi Center Code</th>
+                                    <th rowspan="2">Anganwadi Center</th>
+                                    <th rowspan="2">Adolescent</th>
+                                    <th rowspan="2">Gender</th>
+                                    <th rowspan="2">Age</th>
+                                    <th rowspan="2">Date of Enrollment</th>
+                                    <th colspan="3">Life Skill</th>
+                                    <th colspan="3">Learn and understand from peers</th>
+                                    <th colspan="3">Communicate with confidence</th>
+                                    <th colspan="3">Education is our right</th>
+                                    <th colspan="3">Opportunity of skill development and employment</th>
+                                    <th colspan="3">Let's go to Yuva Maitri Kendra-Police is at our service</th>
+                                    <th colspan="3">Be careful about migration</th>
+                                    <th colspan="3">Be careful when connected in internet</th>
+                                    <th colspan="3">Sathiya Salah App is for us</th>
+                                    <th colspan="3">Gender & Sex</th>
+                                    <th colspan="3">Patriarchy -understanding relevent thinking & explanations</th>
+                                    <th colspan="3">Why a son not a daughter?</th>
+                                    <th colspan="3">Hum Barabar Tum Barabar, Gender Power Walk</th>
+                                    <th colspan="3">Gender based violence</th>
+                                    <th colspan="3">Understand and prevent gender based violance</th>
+                                    <th colspan="3">Be aware of Human trafficking</th>
+                                    <th colspan="3">Men should understand their roles and responsibility on gender equality</th>
+                                    <th colspan="3">Child marriage, Dowry system, Witch system</th>
+                                    <th colspan="3">Legal provisions related to Child marriage, Dowry system, Witch system</th>
+                                    <th colspan="3">Causes of influencing nutrition & Anaemia</th>
+                                    <th colspan="3">Personal hygiene</th>
+                                    <th colspan="3">Adolescence</th>
+                                    <th colspan="3">Adolescence - physical change</th>
+                                    <th colspan="3">Adolescence - emotional change</th>
+                                    <th colspan="3">Adolescence - social change</th>
+                                    <th colspan="3">Developing positive attitude towards changes during adolescence</th>
+                                    <th colspan="3">Adolescent reproductive organs and their functions</th>
+                                    <th colspan="3">Menstruation & night fall</th>
+                                    <th colspan="3">RTI/STI</th>
+                                    <th colspan="3">HIV-AIDS</th>
+                                    <th colspan="3">Contraception & Family Planning, teen pregnancy</th>
+                                    <th colspan="3">Safe sex & legal age for consentual sex</th>
+                                    <th colspan="3">We get healthy mind</th>
+                                    <th colspan="3">Myth & Misconception regarding addictive substance among adolescents</th>
+                                    <th colspan="3">Lifestyle and non-communicable diseases</th>
+                                    <th colspan="3">Others</th>
+                                    <th rowspan="2">Total Number of Sessions attended</th>
+                                    <th rowspan="2">%age of session attend</th>
+                                </tr>
+                                <tr>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                    <th>Day-1</th>
+                                    <th>Day-2</th>
+                                    <th>Day-3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for a in data %}
+                                <tr>
+                                    <th>{{a.adolesent_code}}</th>
+                                    <td>{{a.dst_name}}</td>
+                                    <td>{{a.blk_name}}</td>
+                                    <td>{{a.pyt_name}}</td>
+                                    <td>{{a.vlg_name}}</td>
+                                    <td>{{a.cc_name}}</td>
+                                    <td>{{a.awc_code}}</td>
+                                    <td>{{a.awc_name}}</td>
+                                    <td>{{a.adolesent_name}}</td>
+                                    <td>{{a.gender}}</td>
+                                    <td>{{a.age}}</td>
+                                    <td>{{a.emt_date|default_if_none:""}}</td>
+                                    <td>{{a.life_skill_d1}}</td>
+                                    <td>{{a.life_skill_d2}}</td>
+                                    <td>{{a.life_skill_d3}}</td>
+                                    <td>{{a.lup_d1}}</td>
+                                    <td>{{a.lup_d2}}</td>
+                                    <td>{{a.lup_d3}}</td>
+                                    <td>{{a.cwc_d1}}</td>
+                                    <td>{{a.cwc_d2}}</td>
+                                    <td>{{a.cwc_d3}}</td>
+                                    <td>{{a.eor_d1}}</td>
+                                    <td>{{a.eor_d2}}</td>
+                                    <td>{{a.eor_d3}}</td>
+                                    <td>{{a.osd_d1}}</td>
+                                    <td>{{a.osd_d2}}</td>
+                                    <td>{{a.osd_d3}}</td>
+                                    <td>{{a.ymkp_d1}}</td>
+                                    <td>{{a.ymkp_d2}}</td>
+                                    <td>{{a.ymkp_d3}}</td>
+                                    <td>{{a.bciam_d1}}</td>
+                                    <td>{{a.bciam_d2}}</td>
+                                    <td>{{a.bciam_d3}}</td>
+                                    <td>{{a.bcci_d1}}</td>
+                                    <td>{{a.bcci_d2}}</td>
+                                    <td>{{a.bcci_d3}}</td>
+                                    <td>{{a.ssafu_d1}}</td>
+                                    <td>{{a.ssafu_d2}}</td>
+                                    <td>{{a.ssafu_d3}}</td>
+                                    <td>{{a.gs_d1}}</td>
+                                    <td>{{a.gs_d2}}</td>
+                                    <td>{{a.gs_d3}}</td>
+                                    <td>{{a.purt_d1}}</td>
+                                    <td>{{a.purt_d2}}</td>
+                                    <td>{{a.purt_d3}}</td>
+                                    <td>{{a.wsnd_d1}}</td>
+                                    <td>{{a.wsnd_d2}}</td>
+                                    <td>{{a.wsnd_d3}}</td>
+                                    <td>{{a.htgpw_d1}}</td>
+                                    <td>{{a.htgpw_d2}}</td>
+                                    <td>{{a.htgpw_d3}}</td>
+                                    <td>{{a.gbv_d1}}</td>
+                                    <td>{{a.gbv_d2}}</td>
+                                    <td>{{a.gbv_d3}}</td>
+                                    <td>{{a.uspgbv_d1}}</td>
+                                    <td>{{a.uspgbv_d2}}</td>
+                                    <td>{{a.uspgbv_d3}}</td>
+                                    <td>{{a.bwht_d1}}</td>
+                                    <td>{{a.bwht_d2}}</td>
+                                    <td>{{a.bwht_d3}}</td>
+                                    <td>{{a.murgq_d1}}</td>
+                                    <td>{{a.murgq_d2}}</td>
+                                    <td>{{a.murgq_d3}}</td>
+                                    <td>{{a.cm_dwsys_d1}}</td>
+                                    <td>{{a.cm_dwsys_d2}}</td>
+                                    <td>{{a.cm_dwsys_d3}}</td>
+                                    <td>{{a.dws_d1}}</td>
+                                    <td>{{a.dws_d2}}</td>
+                                    <td>{{a.dws_d3}}</td>
+                                    <td>{{a.cina_d1}}</td>
+                                    <td>{{a.cina_d2}}</td>
+                                    <td>{{a.cina_d3}}</td>
+                                    <td>{{a.ph_d1}}</td>
+                                    <td>{{a.ph_d2}}</td>
+                                    <td>{{a.ph_d3}}</td>
+                                    <td>{{a.adolesence_d1}}</td>
+                                    <td>{{a.adolesence_d2}}</td>
+                                    <td>{{a.adolesence_d3}}</td>
+                                    <td>{{a.apc_d1}}</td>
+                                    <td>{{a.apc_d2}}</td>
+                                    <td>{{a.apc_d3}}</td>
+                                    <td>{{a.aec_d1}}</td>
+                                    <td>{{a.aec_d2}}</td>
+                                    <td>{{a.aec_d3}}</td>
+                                    <td>{{a.asc_d1}}</td>
+                                    <td>{{a.asc_d2}}</td>
+                                    <td>{{a.asc_d3}}</td>
+                                    <td>{{a.dptcda_d1}}</td>
+                                    <td>{{a.dptcda_d2}}</td>
+                                    <td>{{a.dptcda_d3}}</td>
+                                    <td>{{a.arof_d1}}</td>
+                                    <td>{{a.arof_d2}}</td>
+                                    <td>{{a.arof_d3}}</td>
+                                    <td>{{a.mnf_d1}}</td>
+                                    <td>{{a.mnf_d2}}</td>
+                                    <td>{{a.mnf_d3}}</td>
+                                    <td>{{a.rti_sti_d1}}</td>
+                                    <td>{{a.rti_sti_d2}}</td>
+                                    <td>{{a.rti_sti_d3}}</td>
+                                    <td>{{a.hiv_aids_d1}}</td>
+                                    <td>{{a.hiv_aids_d2}}</td>
+                                    <td>{{a.hiv_aids_d3}}</td>
+                                    <td>{{a.cfp_d1}}</td>
+                                    <td>{{a.cfp_d2}}</td>
+                                    <td>{{a.cfp_d3}}</td>
+                                    <td>{{a.slafcs_d1}}</td>
+                                    <td>{{a.slafcs_d2}}</td>
+                                    <td>{{a.slafcs_d3}}</td>
+                                    <td>{{a.wghm_d1}}</td>
+                                    <td>{{a.wghm_d2}}</td>
+                                    <td>{{a.wghm_d3}}</td>
+                                    <td>{{a.mmrasna_d1}}</td>
+                                    <td>{{a.mmrasna_d2}}</td>
+                                    <td>{{a.mmrasna_d3}}</td>
+                                    <td>{{a.lncd_d1}}</td>
+                                    <td>{{a.lncd_d2}}</td>
+                                    <td>{{a.lncd_d3}}</td>
+                                    <td>{{a.other_d1}}</td>
+                                    <td>{{a.other_d2}}</td>
+                                    <td>{{a.other_d3}}</td>
+                                    <td>{{a.total}}</td>
+                                    <td>{{a.ptg}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <nav aria-label="..." class="d-flex justify-content-end mt-3">
+                    <div>
+                        {% if data.has_other_pages %}
+                        <ul class="pagination">
+                            {% if data.has_previous %}
+                            <li class="paginate_button page-item"><a class="page-link" href="?page=1">First</a></li>
+                            {% else %}
+                            <li class="paginate_button page-item disabled"><span class="page-link">First</span></li>
+                            {% endif %}
+                            {% for i in display_page_range %}
+                                {% if data.number == i %}
+                                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                <li class="paginate_button paginate_button page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if data.has_next %}
+                                <li class="paginate_button page-item"><a class="page-link" href="?page={{ data.paginator.num_pages }}">Last</a></li>
+                            {% else %}
+                                <li class="paginate_button page-item disabled"><span class="page-link">Last</span></li>
+                            {% endif %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+{% endblock %}
+{% block extra_javascript %}
+
+<script type="text/javascript">
+     $("button[id='reset']").on("click", function(event){
+        $('.district').val('');
+        $('.block').val('');
+        $('.gramapanchayat').val('');
+        $('.village').val('');
+        $('.awc').val('');
+        $('.user').val('');
+        this.form.submit();
+    });
+    
+</script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() { 
+        $('.user').select2({placeholder: "Select a User",})
+        $('.gramapanchayat').select2({placeholder: "Select a GramaPanchayat",})
+        $('.block').select2({placeholder: "Select a Block",}) 
+        $('.village').select2({placeholder: "Select a Village",})
+        $('.awc').select2({placeholder: "Select a AWC",})
+        $('.district').select2({placeholder: "Select a District",})
+        $('select#district').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_district[]': valueSelected
+            }
+            $.ajax({
+                type:"GET",
+                url: '/ajax/report_block_id/',
+                data: data,
+                success:function(result){
+                    $("#block option").remove();
+                    $("#grama_panchayat option").remove();
+                    $("#village option").remove();
+                    $("#awc option").remove();
+                    if(JSON.parse(result) == 0){
+                        $("#block option").remove();
+                        $("#grama_panchayat option").remove();
+                        a = '<option disabled value="">No Block is mapped to this District Name</option>';
+                        $("#block").append(a);
+                        
+                    }
+                    else{
+                        $.each(JSON.parse(result),function(key, value)
+                        {
+                            a = '<option value=' + value['id']+'>' + value['name']+'</option>';
+                            $("#block").append(a);
+                        });
+                    }
+                }
+            });
+        });
+        $('select#block').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_block[]': valueSelected
+            }
+            $.ajax({
+                type: "GET",
+                url: '/ajax/grama_panchayat_id/',
+                data: data,
+                success: function (result) {
+                    $("#grama_panchayat option").remove();
+                    $("#village option").remove();
+                    $("#awc option").remove();
+                    if (JSON.parse(result) == 0) {
+                        $("#grama_panchayat option").remove();
+                        $("#village option").remove();
+                        $("#awc option").remove();
+                        a =
+                        '<option selected disabled value="">No grama_panchayat mapped for this block</option>';
+                        $("#grama_panchayat").append(a);
+                        // b =
+                        // '<option selected disabled value="">No block mapped for this grama_panchayat</option>';
+                        // $("#grama_panchayat").append(b);
+                    } else {
+                        $.each(JSON.parse(result), function (key, value) {
+                            a = '<option value=' + value['id'] + '>' +
+                                value['name'] + '</option>';
+                            $("#grama_panchayat").append(a);
+                        });
+                    }
+                }
+            });
+        });
+        $('select#grama_panchayat').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_grama_panchayat[]': valueSelected
+            }
+            $.ajax({
+                type: "GET",
+                url: '/ajax/village_id/',
+                data: data,
+                success: function (result) {
+                    $("#village option").remove();
+                    $("#awc option").remove();
+                    if (JSON.parse(result) == 0) {
+                        $("#village option").remove();
+                        $("#awc option").remove();
+                        a =
+                        '<option selected disabled value="">No village mapped for this grama panchayat</option>';
+                        $("#village").append(a);
+                        // b =
+                        // '<option selected disabled value="">No grama panchayat mapped for this village</option>';
+                        // $("#village").append(b);
+                    } else {
+                        $.each(JSON.parse(result), function (key, value) {
+                            a = '<option value=' + value['id'] + '>' +
+                                value['name'] + '</option>';
+                            $("#village").append(a);
+                        });
+                    }
+                }
+            });
+        });
+        $('select#village').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_village[]': valueSelected
+            }
+            $.ajax({
+                type: "GET",
+                url: '/ajax/awc_id/',
+                data: data,
+                success: function (result) {
+                    $("#awc option").remove();
+                    if (JSON.parse(result) == 0) {
+                        $("#awc option").remove();
+                        a ='<option selected disabled value="">No awc mapped for this village</option>';
+                        $("#awc").append(a);
+                    } else {
+                        $.each(JSON.parse(result), function (key, value) {
+                            a = '<option value=' + value['id'] + '>' +
+                                value['name'] + '</option>';
+                            $("#awc").append(a);
+                        });
+                    }
+                }
+            });
+        });
+    });
+ </script>
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block contents %}
+<!-- class="form-horizontal" -->
+<!--************Chart Script Part*********-->
+{% include "dashboard/chart_script.html" %}
+<!--**************************************-->
+<div class="row align-items-center">
+    <div class="col-xl-12 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form class="needs-validation form-horizontal" enctype="multipart/form-data" novalidate  method="POST" id="filters">
+                    {%csrf_token%}
+                    <div class="row">
+                        <div class="col-md-4">  
+                            <div class="mb-3">
+                                <label for="floatingnameInput">User:</label>
+                                <select  class="form-control select2 select2-multiple user" multiple="multiple" aria-label="Floating label select example" 
+                                placeholder="Choose District" id="user_id" name='user' >      
+                                    {% for user in user_ids %}
+                                        <option value="{{user.id}}" {% if user.id|slugify in usr_ids  %}selected{% endif %}>{{user.username}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">  
+                            <div class="mb-3">
+                                <label for="floatingnameInput">District :</label>
+                                <select class="select2 form-control select2-multiple state district" multiple="multiple"  id="district" name='district'>
+                                    {% for district in district_list %}
+                                        {% for key, value in district.items %}
+                                            <option value="{{key}}" {% if key|slugify in dt_ids %}selected{% endif %}>{{value}}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Block :</label>
+                                <select class="select2 form-control select2-multiple state block" multiple="multiple"  id='block' name='block'>
+                                    {% for block in block_list %}
+                                        <option value="{{block.id}}" {% if block.id|slugify in bk_ids  %}selected{% endif %}>{{block.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <label for="floatingnameInput">Start date:</label>
+                            <input type="month" class="form-control" name='start_filter'  value="{{req_list.start_filter}}" id="start_filter" onchange='onselected_start_month(this)' onkeyup="month();">
+                            <div class="invalid-feedback">
+                                Please provide a valid both date field.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="floatingnameInput">End date:</label>
+                            <input type="month" class="form-control" name='end_filter' value="{{req_list.end_filter}}" id="end_filter" onchange='onselected_start_month(this)'>
+                            <div class="invalid-feedback">
+                                Please provide a valid both date field and Start date should be greater than or equal to end date.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end mt-3">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-square btn-success btn-lg float-right">Filter</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" id="reset" class="btn btn-square btn-primary btn-lg float-right">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            {% for ct in data_html.chart %}
+                <div class="{{ct.div}}" >
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+				    <h5>{{ct.chart_title}} {% if ct.tooltip %}<i class="fa fa-info-circle"data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="{{ct.tooltip}}" ></i>{% endif %}</h5>
+                            </div>
+                            <div class="row">
+				    <div class="col-12 {%if ct.chart_type == 'TABLECHART'%}justify-content-bottom mt-5{%endif%}" >
+                                    <div id="{{ct.chart_name}}"style="width:95%;height:{{ct.chart_height}};"></div>
+                                </div>
+				<div style="display:inline-block;margin-left: 10px;{%if ct.chart_type == 'TABLECHART' %}margin-top:10px;{%endif%}">{{ct.chart_note|safe}}</div>
+                            </div>
+                        </div>
+                    </div>	
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_javascript %}
+
+<script type="text/javascript">
+    $("#reset").click(function() {
+        $('#user_id').val('');
+        $('#district').val('');
+        $('#block').val('');
+        $('#start_filter').val('');
+        $('#end_filter').val('');
+        this.form.submit();
+    });
+    $("#start_filter").on("change", function(event){
+           document.getElementById("end_filter").min=$("#start_filter").val()
+   });
+   function onselected_start_month(){
+       var start_month = document.getElementById("start_filter");
+       var end_month = document.getElementById("end_filter");
+       if (start_month != '' && end_month != ''){
+           document.querySelector('#start_filter').required = true;
+           document.querySelector('#end_filter').required = true;
+       }
+       else{
+           document.querySelector('#start_filter').required = false;
+           document.querySelector('#end_filter').required = false;
+          
+       }  
+
+   }
+</script>
+<script type="text/javascript">
+   document.addEventListener('DOMContentLoaded', function() {    
+       $('.block').select2({placeholder: "Select a Block",})                      
+       $('.user').select2({placeholder: "Select a User",})                      
+       $('.district').select2({placeholder: "Select a District",})                      
+       $('select#district').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_district[]': valueSelected
+            }
+            $.ajax({
+                type:"GET",
+                url: '/ajax/report_block_id/',
+                data: data,
+                success:function(result){
+                    $("#block option").remove();
+                    if(JSON.parse(result) == 0){
+                        $("#block option").remove();
+                        $("#grama_panchayat option").remove();
+                        a = '<option disabled value="">No Block is mapped to this District Name</option>';
+                        $("#block").append(a);
+                        
+                    }
+                    else{
+                        $.each(JSON.parse(result),function(key, value)
+                        {
+                            a = '<option value=' + value['id']+'>' + value['name']+'</option>';
+                            $("#block").append(a);
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,269 @@
+<!--Section 12-->
+<!--Details of sessions monitoring and handholding support at block level  -->
+
+<div class="row" id="rpos-11">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}11{% elif current_site == 3 %}10{% else %}13{% endif %}:</h4>
+                    <p class="card-title-desc">Details of capacity building of different stakeholders</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="  hd1  {{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="stakeholders" class="btn btn-primary waves-effect justify-content-start" value="stakeholders">
+                             Export
+                        </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>  
+                                    <th>Education department master trainers male</th>
+                                    <th>Education department master trainers female</th>
+                                    <th>Education department master trainers total</th>
+                                    <th>Education department nodal teachers male</th>
+                                    <th>Education department nodal teachers female</th>
+                                    <th>Education department nodal teachers total</th>
+                                    <th>Education department principals male</th>
+                                    <th>Education department principals female</th>
+                                    <th>Education department principals total</th>
+                                    <th>Education department district level officials male</th>
+                                    <th>Education department district level officials female</th>
+                                    <th>Education department district level officials total</th>
+                                    <th>Education department peer educator male</th>
+                                    <th>Education department peer educator female</th>
+                                    <th>Education department peer educator total</th>
+                                    <th>Education department state level officials male</th>
+                                    <th>Education department state level officials female</th>
+                                    <th>Education department state level officials total</th>
+                                    <th>ICDS department AWWs male</th>
+                                    <th>ICDS department AWWs female</th>
+                                    <th>ICDS department AWWs total</th>
+                                    <th>ICDS department supervisors male</th>
+                                    <th>ICDS department supervisors female</th>
+                                    <th>ICDS department supervisors total</th>
+                                    <th>ICDS department peer educator male</th>
+                                    <th>ICDS department peer educator female</th>
+                                    <th>ICDS department peer educator total</th>
+                                    <th>ICDS department child developement project officers male</th>
+                                    <th>ICDS department child developement project officers female</th>
+                                    <th>ICDS department child developement project officers total</th>
+                                    <th>ICDS department district level officials male</th>
+                                    <th>ICDS department district level officials female</th>
+                                    <th>ICDS department district level officials total</th>
+                                    <th>ICDS department state level officials male</th>
+                                    <th>ICDS department state level officials female</th>
+                                    <th>ICDS department state level officials total</th>
+                                    <th>Health department ASHAs male</th>
+                                    <th>Health department ASHAs female</th>
+                                    <th>Health department ASHAs total</th>
+                                    <th>Health department ANMs male</th>
+                                    <th>Health department ANMs female</th>
+                                    <th>Health department ANMs total</th>
+                                    <th>Health department BPM/BHM/PHEOs male</th>
+                                    <th>Health department BPM/BHM/PHEOs female</th>
+                                    <th>Health department BPM/BHM/PHEOs total</th>
+                                    <th>Health department medical officers male</th>
+                                    <th>Health department medical officers female</th>
+                                    <th>Health department medical officers total</th>
+                                    <th>Health department district level officials male</th>
+                                    <th>Health department district level officials female</th>
+                                    <th>Health department district level officials total</th>
+                                    <th>Health department state level officials male</th>
+                                    <th>Health department state level officials female</th>
+                                    <th>Health department state level officials total</th>
+                                    <th>Health department RKS male</th>
+                                    <th>Health department RKS female</th>
+                                    <th>Health department RKS total</th>
+                                    <th>Health department peer educator male</th>
+                                    <th>Health department peer educator female</th>
+                                    <th>Health department peer educator total</th>
+                                    <th>Panchayat raj department ward members male</th>
+                                    <th>Panchayat raj department ward members female</th>
+                                    <th>Panchayat raj department ward members total</th>
+                                    <th>Panchayat raj department Up-mukhiya/Up-pramukh male</th>
+                                    <th>Panchayat raj department Up-mukhiya/Up-pramukh female</th>
+                                    <th>Panchayat raj department Up-mukhiya/Up-pramukh total</th>
+                                    <th>Panchayat raj department mukhiya Pramukh male</th>
+                                    <th>Panchayat raj department mukhiya Pramukh female</th>
+                                    <th>Panchayat raj department mukhiya Pramukh total</th>
+                                    <th>Panchayat raj department samiti member male</th>
+                                    <th>Panchayat raj department samiti member female</th>
+                                    <th>Panchayat raj department samiti member total</th>
+                                    <th>Panchayat raj department zila parishad member male</th>
+                                    <th>Panchayat raj department zila parishad member female</th>
+                                    <th>Panchayat raj department zila parishad member total</th>
+                                    <th>Panchayat raj department Vc-Zila parishad male</th>
+                                    <th>Panchayat raj department Vc-Zila parishad female</th>
+                                    <th>Panchayat raj department Vc-Zila parishad total</th>
+                                    <th>Panchayat raj department chairman zila parishad male</th>
+                                    <th>Panchayat raj department chairman zila parishad female</th>
+                                    <th>Panchayat raj department chairman zila parishad total</th>
+                                    <th>Panchayat raj department block level officials male</th>
+                                    <th>Panchayat raj department block level officials female</th>
+                                    <th>Panchayat raj department block level officials total</th>
+                                    <th>Panchayat raj department district level officials male</th>
+                                    <th>Panchayat raj department district level officials female</th>
+                                    <th>Panchayat raj department district level officials total</th>
+                                    <th>Panchayat raj department state level officials male</th>
+                                    <th>Panchayat raj department state level officials female</th>
+                                    <th>Panchayat raj department state level officials total</th>
+                                    <th>Media interns male</th>
+                                    <th>Media interns female</th>
+                                    <th>Media interns total</th>
+                                    <th>Media journalists male</th>
+                                    <th>Media journalists female</th>
+                                    <th>Media journalists total</th>
+                                    <th>Media editors male</th>
+                                    <th>Media editors female</th>
+                                    <th>Media editors total</th>
+                                    <th>Others block cluster field corrdinators male</th>
+                                    <th>Others block cluster field corrdinators female</th>
+                                    <th>Others block cluster field corrdinators total</th>
+                                    <th>Others ngo staff corrdinators male</th>
+                                    <th>Others ngo staff corrdinators female</th>
+                                    <th>Others ngo staff corrdinators total</th>
+                                    <th>Others male</th>
+                                    <th>Others female</th>
+                                    <th>Others total</th>
+                                    <th>Total male</th>
+                                    <th>Total female</th>
+                                    <th>Total</th>
+                                    <th>Created On</th>
+                                </tr>
+                           </thead>
+                            <tbody>
+                                {% for s in stakeholders %}
+                                <tr>
+                                    <th>{{s.task.user}}</th>
+                                    <td>{{s.task.start_date|date:"F Y"}}</td>
+                                    <td>{{s.master_trainers_male|default_if_none:""}}</td>
+                                    <td>{{s.master_trainers_female|default_if_none:""}}</td>
+                                    <td>{{s.master_trainers_total|default_if_none:""}}</td>
+                                    <td>{{s.nodal_teachers_male|default_if_none:""}}</td>
+                                    <td>{{s.nodal_teachers_female|default_if_none:""}}</td>
+                                    <td>{{s.nodal_teachers_total|default_if_none:""}}</td>
+                                    <td>{{s.principals_male|default_if_none:""}}</td>
+                                    <td>{{s.principals_female|default_if_none:""}}</td>
+                                    <td>{{s.principals_total|default_if_none:""}}</td>
+                                    <td>{{s.district_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.district_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.district_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.peer_educator_male|default_if_none:""}}</td>
+                                    <td>{{s.peer_educator_female|default_if_none:""}}</td>
+                                    <td>{{s.peer_educator_total|default_if_none:""}}</td>
+                                    <td>{{s.state_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.state_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.state_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.icds_awws_male|default_if_none:""}}</td>
+                                    <td>{{s.icds_awws_female|default_if_none:""}}</td>
+                                    <td>{{s.icds_awws_total|default_if_none:""}}</td>
+                                    <td>{{s.icds_supervisors_male|default_if_none:""}}</td>
+                                    <td>{{s.icds_supervisors_female|default_if_none:""}}</td>
+                                    <td>{{s.icds_supervisors_total|default_if_none:""}}</td>
+                                    <td>{{s.icds_peer_educator_male|default_if_none:""}}</td>
+                                    <td>{{s.icds_peer_educator_female|default_if_none:""}}</td>
+                                    <td>{{s.icds_peer_educator_total|default_if_none:""}}</td>
+                                    <td>{{s.icds_child_developement_project_officers_male|default_if_none:""}}</td>
+                                    <td>{{s.icds_child_developement_project_officers_female|default_if_none:""}}</td>
+                                    <td>{{s.icds_child_developement_project_officers_total|default_if_none:""}}</td>
+                                    <td>{{s.icds_district_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.icds_district_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.icds_district_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.icds_state_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.icds_state_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.icds_state_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.health_ashas_male|default_if_none:""}}</td>
+                                    <td>{{s.health_ashas_female|default_if_none:""}}</td>
+                                    <td>{{s.health_ashas_total|default_if_none:""}}</td>
+                                    <td>{{s.health_anms_male|default_if_none:""}}</td>
+                                    <td>{{s.health_anms_female|default_if_none:""}}</td>
+                                    <td>{{s.health_anms_total|default_if_none:""}}</td>
+                                    <td>{{s.health_bpm_bhm_pheos_male|default_if_none:""}}</td>
+                                    <td>{{s.health_bpm_bhm_pheos_female|default_if_none:""}}</td>
+                                    <td>{{s.health_bpm_bhm_pheos_total|default_if_none:""}}</td>
+                                    <td>{{s.health_medical_officers_male|default_if_none:""}}</td>
+                                    <td>{{s.health_medical_officers_female|default_if_none:""}}</td>
+                                    <td>{{s.health_medical_officers_total|default_if_none:""}}</td>
+                                    <td>{{s.health_district_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.health_district_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.health_district_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.health_state_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.health_state_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.health_state_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.health_rsk_male|default_if_none:""}}</td>
+                                    <td>{{s.health_rsk_female|default_if_none:""}}</td>
+                                    <td>{{s.health_rsk_total|default_if_none:""}}</td>
+                                    <td>{{s.health_peer_educator_male|default_if_none:""}}</td>
+                                    <td>{{s.health_peer_educator_female|default_if_none:""}}</td>
+                                    <td>{{s.health_peer_educator_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_ward_members_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_ward_members_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_ward_members_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_up_mukhiya_up_Pramukh_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_up_mukhiya_up_Pramukh_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_up_mukhiya_up_Pramukh_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_mukhiya_Pramukh_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_mukhiya_Pramukh_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_mukhiya_Pramukh_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_samiti_member_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_samiti_member_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_samiti_member_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_zila_parishad_member_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_zila_parishad_member_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_zila_parishad_member_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_vc_zila_parishad_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_vc_zila_parishad_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_vc_zila_parishad_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_chairman_zila_parishad_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_chairman_zila_parishad_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_chairman_zila_parishad_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_block_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_block_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_block_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_district_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_district_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_district_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_state_level_officials_male|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_state_level_officials_female|default_if_none:""}}</td>
+                                    <td>{{s.panchayat_state_level_officials_total|default_if_none:""}}</td>
+                                    <td>{{s.media_interns_male|default_if_none:""}}</td>
+                                    <td>{{s.media_interns_female|default_if_none:""}}</td>
+                                    <td>{{s.media_interns_total|default_if_none:""}}</td>
+                                    <td>{{s.media_journalists_male|default_if_none:""}}</td>
+                                    <td>{{s.media_journalists_female|default_if_none:""}}</td>
+                                    <td>{{s.media_journalists_total|default_if_none:""}}</td>
+                                    <td>{{s.media_editors_male|default_if_none:""}}</td>
+                                    <td>{{s.media_editors_female|default_if_none:""}}</td>
+                                    <td>{{s.media_editors_total|default_if_none:""}}</td>
+                                    <td>{{s.others_block_cluster_field_corrdinators_male|default_if_none:""}}</td>
+                                    <td>{{s.others_block_cluster_field_corrdinators_female|default_if_none:""}}</td>
+                                    <td>{{s.others_block_cluster_field_corrdinators_total|default_if_none:""}}</td>
+                                    <td>{{s.others_ngo_staff_corrdinators_male|default_if_none:""}}</td>
+                                    <td>{{s.others_ngo_staff_corrdinators_female|default_if_none:""}}</td>
+                                    <td>{{s.others_ngo_staff_corrdinators_total|default_if_none:""}}</td>
+                                    <td>{{s.others_male|default_if_none:""}}</td>
+                                    <td>{{s.others_female|default_if_none:""}}</td>
+                                    <td>{{s.others_total|default_if_none:""}}</td>
+                                    <td>{{s.total_male|default_if_none:""}}</td>
+                                    <td>{{s.total_female|default_if_none:""}}</td>
+                                    <td>{{s.total|default_if_none:""}}</td>
+                                    <td>{{s.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

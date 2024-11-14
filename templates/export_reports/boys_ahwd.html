@@ -1,0 +1,78 @@
+<!--Section 4(b)-->
+<!--Details of participation of adolescent boys in Adolescent Health Wellness Day (AHWD) -->
+
+<div class="row" id="rccs-3b">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}4(b){% else %}3(b){% endif %}:</h4>
+                    <p class="card-title-desc">Details of participation of adolescent boys in Adolescent Health Wellness Day (AHWD)</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="boys_ahwd" class="btn btn-primary waves-effect justify-content-start" value="boys_ahwd">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Date of AHWD</th>
+                                    <th>Name of Panchayat</th>
+                                    <th>Name of Village</th>
+                                    <th>Place of the AHWD</th>
+                                    <th>Name of the AWC, HWC, School</th>
+                                    <th>Number of adolescent boys participated 10-14 year</th>
+                                    <th>Number of adolescent boys participated 15-19 year</th>
+                                    <th>Number of adolescent who received services BMI 10-14 year</th>
+                                    <th>Number of adolescent who received services BMI 15-19 year</th>
+                                    <th>Number of adolescent who received services HB test 10-14 year</th>
+                                    <th>Number of adolescent who received services HB test 15-19 year</th>
+                                    <th>Number of adolescent who received services Counselling 10-14 year</th>
+                                    <th>Number of adolescent who received services Counselling 15-19 year</th>
+                                    <th>Number of adolescent who received services Referral 10-14 year</th>
+                                    <th>Number of adolescent who received services Referral 15-19 year</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for g in boys_ahwd %}
+                                <tr>
+                                    <th>{{g.task.user}}</th>
+                                    <th>{{g.task.start_date|date:"F Y"}}</th>
+                                    <th>{{g.date_of_ahwd}}</th>
+                                    <th>{{g.content_object.village.grama_panchayat|default:"Not applicable"}}</th>
+                                    <th>{{g.content_object.village|default:"Not applicable"}}</th>
+                                    <th>{{g.get_place_of_ahwd_display}}</th>
+                                    <th>{{g.content_object|default_if_none:""}}{{g.hwc_name|default_if_none:""}}</th>
+                                    <td>{{g.participated_10_14_years}}</td>
+                                    <td>{{g.participated_15_19_years}}</td>
+                                    <td>{{g.bmi_10_14_years}}</td>
+                                    <td>{{g.bmi_15_19_years}}</td>
+                                    <td>{{g.hb_10_14_years}}</td>
+                                    <td>{{g.hb_15_19_years}}</td>
+                                    <td>{{g.counselling_10_14_years}}</td>
+                                    <td>{{g.counselling_15_19_years}}</td>
+                                    <td>{{g.referral_10_14_years}}</td>
+                                    <td>{{g.referral_15_19_years}}</td>
+                                    <td>{{g.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

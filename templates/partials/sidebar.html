@@ -1,0 +1,105 @@
+{% load configuration_tags   %}
+{% load static %} {% block sidebar %}
+<!-- ========== Left Sidebar Start ========== -->
+<style>
+  body[data-sidebar=dark].vertical-collpsed .vertical-menu #sidebar-menu ul li.mm-active .active i {
+    color: #fc7c04!important;
+}
+</style> 
+<div class="vertical-menu">
+  <div data-simplebar class="h-100">
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <!-- Left Menu Start -->
+      <ul class="metismenu list-unstyled" id="side-menu">
+       
+        {% if not request.user|has_group:"Reports" %}
+        {% if not request.user|has_group:"Senior Lead" and not request.user|has_group:"Admin" %}
+        <li>
+          <a href="/monthly/report/" class="waves-effect">
+            <i class="dripicons-document"></i>
+            <span key="t-chat">Monthly report</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if request.user|has_group:"Program Officer" %}
+          <li>
+            <a href="/cc/monthly/report/" class="waves-effect">
+              <i class="dripicons-document"></i>
+              <span key="t-chat">CC Monthly report</span>
+            </a>
+          </li>
+          
+        {% elif request.user|has_group:"Senior Program Officer" %}
+          <li>
+            <a href="/po/monthly/report/" class="waves-effect">
+              <i class="dripicons-document"></i>
+              <span key="t-chat">PO Monthly report</span>
+            </a>
+          </li>
+          {% if request.user|current_domain == 3 %}
+          <li>
+            <a href="/tco/monthly/report/" class="waves-effect">
+              <i class="dripicons-document"></i>
+              <span key="t-chat">TC Monthly report </span>
+            </a>
+          </li>
+          {% endif %}
+        {% elif request.user|has_group:"Senior Lead" %}
+          <li>
+            <a href="/spo/monthly/report/" class="waves-effect">
+              <i class="dripicons-document"></i>
+              <span key="t-chat">SPO Monthly report</span>
+            </a>
+          </li> 
+        {% endif %}
+        {% if request.user|has_group:"Trainging Coordinator" %}
+          <li>
+            <a href="/cc/monthly/report/" class="waves-effect">
+              <i class="dripicons-document"></i>
+              <span key="t-chat">CC Monthly report</span>
+            </a>
+          </li>
+        {% endif %}
+        
+        <li>
+          <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <i class="bx bx-tone"></i>
+              <span key="t-tasks">Dashboard</span>
+          </a>
+          <ul class="sub-menu mm-collapse" aria-expanded="false">
+            <li class=""><a href="/dashboard1/" key="t-task-list">Adolescent - Summary, Sessions, Training</a></li>
+            <li class=""><a href="/dashboard2/" key="t-task-list">Referral and Meeting</a></li>
+            <li class=""><a href="/dashboard3/" key="t-task-list">Exposer, AHWD, Students Enrolled</a></li>
+            {% if not request.user|has_group:"Cluster Coordinator" %}
+            <li class=""><a href="/dashboard4/" key="t-task-list">Meetings at district & Block Level</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        {% else %}
+        <li>
+          <a href="/report_list/" class="waves-effect">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span key="t-chat">Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="/adolescent_list/" class="waves-effect">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span key="t-chat">Adolescent location mapping wise reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="/adolescent-clinical-report/" class="waves-effect">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span key="t-chat">Adolescent Health Clincial wise reports</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>        
+    </div>
+    <!-- Sidebar -->
+  </div>
+</div>
+<!-- Left Sidebar End -->
+{% endblock %}

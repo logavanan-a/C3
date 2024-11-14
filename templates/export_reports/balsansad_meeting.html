@@ -1,0 +1,59 @@
+<!--Section 6-->
+<!--Details of Bal Sansad meetings conducted  -->
+
+<div class="row" id="rccs-6">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}7{% else %}6{% endif %}:</h4>
+                    <p class="card-title-desc">Details of Bal Sansad meetings conducted  </p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="balsansad_meeting" class="btn btn-primary waves-effect justify-content-start" value="balsansad_meeting">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}  <div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Date</th>
+                                    <th>Name of Panchayat</th>
+                                    <th>Name of School</th>
+                                    <th>Number of participants</th>
+                                    <th>Issues discussion</th>
+                                    <th>Decision taken</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for b in balsansad_meeting %}
+                                <tr>
+                                    <th>{{b.task.user}}</th>
+                                    <th>{{b.task.start_date|date:"F Y"}}</th>
+                                    <th>{{b.start_date}}</th>
+                                    <th>{{b.school_name.village.grama_panchayat}}</th>
+                                    <th>{{b.school_name}}</th>
+                                    <td>{{b.no_of_participants}}</td>
+                                    <td>{{b.issues_discussion}}</td>
+                                    <td>{{b.decision_taken}}</td>
+                                    <td>{{b.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

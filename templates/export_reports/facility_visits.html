@@ -1,0 +1,61 @@
+<!--Section 13-->
+<!--Details of events & facility visits at block level   -->
+
+<div class="row" id="upos-15">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}13{% elif current_site == 3 %}12{% else %}15{% endif %}:</h4>
+                    <p class="card-title-desc">Details of events & facility visits at block level </p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="facility_visits" class="btn btn-primary waves-effect justify-content-start" value="facility_visits">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Date</th>
+                                    <th>Name of Block</th>
+                                    <th>Name of Panchayat</th>
+                                    <th>Place visited</th>
+                                    <th>Purpose of visit</th>
+                                    <th>Observation</th>
+                                    <th>Recommendation</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for f in facility_visits %}
+                                <tr>
+                                    <th>{{f.task.user}}</th>
+                                    <th>{{f.task.start_date|date:"F Y"}}</th>
+                                    <th>{{f.date}}</th>
+                                    <td>{% if f.name_of_visited == 1 %}{{f.content_object.grama_panchayat.block|default:"Not applicable"}}{% else %}{{f.content_object.village.grama_panchayat.block|default:"Not applicable"}}{% endif %}</td>
+                                    <td>{% if f.name_of_visited == 1 %}{{f.content_object.grama_panchayat|default:"Not applicable"}}{% else %}{{f.content_object.village.grama_panchayat|default:"Not applicable"}}{% endif %}</td>
+                                    <td>{{f.content_object|default_if_none:""}}{{f.name_of_place_visited|default_if_none:""}}</td>
+                                    <td>{{f.purpose_visited}}</td>
+                                    <td>{{f.observation}}</td>
+                                    <td>{{f.recommendation}}</td> 
+                                    <td>{{f.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

@@ -1,0 +1,83 @@
+<!--Section 11-->
+<!--Details of DCPU/BCPU engagement at community and institutional level  -->
+
+<div class="row" id="uccs-11">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section 11:</h4>
+                    <p class="card-title-desc">Details of DCPU/BCPU engagement at community and institutional level</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="dcpu_bcpu" class="btn btn-primary waves-effect justify-content-start" value="dcpu_bcpu">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Name of the Block/district</th>
+                                    <th>Name of the Institutions</th>
+                                    <th>Date of Visit</th>
+                                    <th>Name of lead of the meeting</th>
+                                    <th>Designation</th>
+                                    <th>Issues discussed</th>
+                                    <th>Number of participants adolescent boys 10-14 year</th>
+                                    <th>Number of participants adolescent boys 15-19 year</th>
+                                    <th>Number of participants adolescent girls 10-14 year</th>
+                                    <th>Number of participants adolescent girls 15-19 year</th>
+                                    <th>Number of participants champions (15-19 years)</th>
+                                    <th>Number of participants adult male from community</th>
+                                    <th>Number of participants adult female from community</th>
+                                    <th>Number of participants teachers</th>
+                                    <th>Number of participants PRI members</th>
+                                    <th>Number of participants services providers</th>
+                                    <th>Number of participants SMS members</th>
+                                    <th>Number of participants other</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for db in dcpu_bcpu %}
+                                <tr>
+                                    <th>{{db.task.user}}</th>
+                                    <th>{{db.task.start_date|date:"F Y"}}</th>
+                                    <th>{{db.block_name}}</th>
+                                    <td>{{db.name_of_institution}}</td>
+                                    <td>{{db.date_of_visit}}</td>
+                                    <td>{{db.name_of_lead}}</td>
+                                    <td>{{db.designation}}</td>
+                                    <td>{{db.issues_discussed}}</td>
+                                    <td>{{db.girls_10_14_year}}</td>
+                                    <td>{{db.girls_15_19_year}}</td>
+                                    <td>{{db.boys_10_14_year}}</td>
+                                    <td>{{db.boys_15_19_year}}</td>
+                                    <td>{{db.champions_15_19_year}}</td>
+                                    <td>{{db.adult_male}}</td>
+                                    <td>{{db.adult_female}}</td>
+                                    <td>{{db.teachers}}</td>
+                                    <td>{{db.pri_members}}</td>
+                                    <td>{{db.services_providers}}</td> 
+                                    <td>{{db.sms_members}}</td>
+                                    <td>{{db.other}}</td>      
+                                    <td>{{db.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

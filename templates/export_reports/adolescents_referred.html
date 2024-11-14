@@ -1,0 +1,85 @@
+<!--Section 4-->
+<!--Details of adolescents referred  -->
+
+<div class="row" id="rccs-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}5{% else %}4{% endif %}:</h4>
+                    <p class="card-title-desc">Details of adolescents referred </p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="adolescents_referred" class="btn btn-primary waves-effect justify-content-start" value="adolescents_referred">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Name of Panchayat</th>
+                                    <th>Name of Village</th>
+                                    <th>Name of the AWC</th>
+                                    <th>Number of adolescent girls referred 10-14 year</th>
+                                    <th>Number of adolescent girls referred 15-19 year</th>
+                                    <th>Number of adolescent boys referred 10-14 year</th>
+                                    <th>Number of adolescent boys referred 15-19 year</th>
+                                    <th>Number of adolescent girls HWC Referred</th>
+                                    <th>Number of adolescent girls HWC Visited</th>
+                                    <th>Number of adolescent girls AFHC Referred</th>
+                                    <th>Number of adolescent girls AFHC Visited</th>
+                                    <th>Number of adolescent girls DH Referred</th>
+                                    <th>Number of adolescent girls DH Visited</th>
+                                    <th>Number of adolescent boys HWC Referred</th>
+                                    <th>Number of adolescent boys HWC Visited</th>
+                                    <th>Number of adolescent boys AFHC Referred</th>
+                                    <th>Number of adolescent boys AFHC Visited</th>
+                                    <th>Number of adolescent boys DH Referred</th>
+                                    <th>Number of adolescent boys DH Visited</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for v in adolescents_referred %}
+                                <tr>
+                                    <th>{{v.task.user}}</th>
+                                    <th>{{v.task.start_date|date:"F Y"}}</th>
+                                    <th>{{v.awc_name.village.grama_panchayat}}</th>
+                                    <th>{{v.awc_name.village}}</th>
+                                    <th>{{v.awc_name}}</th>
+                                    <td>{{v.girls_referred_10_14_year}}</td>
+                                    <td>{{v.girls_referred_15_19_year}}</td>
+                                    <td>{{v.boys_referred_10_14_year}}</td>
+                                    <td>{{v.girls_referred_15_19_year}}</td>
+                                    <td>{{v.girls_hwc_referred}}</td>
+                                    <td>{{v.girls_hwc_visited}}</td>
+                                    <td>{{v.girls_afhc_referred}}</td>
+                                    <td>{{v.girls_afhc_visited}}</td>
+                                    <td>{{v.girls_dh_referred}}</td>
+                                    <td>{{v.girls_dh_visited}}</td>
+                                    <td>{{v.boys_hwc_referred}}</td>
+                                    <td>{{v.boys_hwc_visited}}</td>
+                                    <td>{{v.boys_afhc_referred}}</td>
+                                    <td>{{v.boys_afhc_visited}}</td>
+                                    <td>{{v.boys_dh_referred}}</td>
+                                    <td>{{v.boys_dh_visited}}</td>
+                                    <td>{{v.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

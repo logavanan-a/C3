@@ -1,0 +1,63 @@
+<!--Section 15-->
+<!--Details of one to one (Follow up/ Liaison) meetings at district & Block Level   -->
+
+<div class="row" id="upos-17">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}15{% elif current_site == 3 %}14{% else %}17{% endif %}:</h4>
+                    <p class="card-title-desc">Details of one to one (Follow up/ Liaison) meetings at district & Block Level</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="followup_liaision" class="btn btn-primary waves-effect justify-content-start" value="followup_liaision">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Date</th>
+                                    <th>District/Block Level</th>
+                                    <th>Meeting with (designation)</th>
+                                    <th>Department</th>
+                                    <th>Points of discussion</th>
+                                    <th>Outcome</th>
+                                    <th>Decision taken</th>
+                                    <th>Remarks</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for f in followup_liaision %}
+                                <tr>
+                                    <th>{{f.task.user}}</th>
+                                    <th>{{f.task.start_date|date:"F Y"}}</th>
+                                    <th>{{f.date}}</th>
+                                    <td>{{f.get_district_block_level_display}}</td>
+                                    <td>{{f.meeting_name.name}}</td>
+                                    <td>{{f.get_departments_display}}</td>
+                                    <td>{{f.point_of_discussion}}</td>
+                                    <td>{{f.outcome}}</td>                                    
+                                    <td>{{f.decision_taken}}</td>  
+                                    <td>{{f.remarks}}</td>  
+                                    <td>{{f.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

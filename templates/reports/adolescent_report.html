@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block contents %}
+<div class="row align-items-center">
+    <div class="col-xl-12 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form class="needs-validation form-horizontal" enctype="multipart/form-data" novalidate  method="GET" id="filters">
+                    <div class="row">
+                        
+                        <div class="col-md-4">  
+                            <div class="mb-3">
+                                <label for="floatingnameInput">District :</label>
+                                <select class="select2 form-control select2-multiple district" multiple="multiple"  id="district" name='district'>
+                                    {% for district in district_obj %}
+                                        {% for key, value in district.items %}
+                                            <option value="{{key}}" {% if key|slugify in district_ids %}selected{% endif %}>{{value}}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Block :</label>
+                                <select class="select2 form-control select2-multiple block" multiple="multiple"  id='block' name='block'>
+                                    {% for block in block_lists %}
+                                        {% for key, value in block.items %}
+                                            <option value="{{key}}" {% if key|slugify in block_ids %}selected{% endif %}>{{value}}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Grama Panchayat :</label>
+                                <select class="select2 form-control select2-multiple gramapanchayat" multiple="multiple"  id='grama_panchayat' name='grama_panchayat'>
+                                    {% for grama_panchayat in grama_panchayat_obj %}
+                                        <option value="{{grama_panchayat.id}}" {% if grama_panchayat.id|slugify in grama_panchayat_ids  %}selected{% endif %}>{{grama_panchayat.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Village :</label>
+                                <select class="select2 form-control select2-multiple village" multiple="multiple"  id='village' name='village'>
+                                    {% for village in village_obj %}
+                                        <option value="{{village.id}}" {% if village.id|slugify in village_ids %}selected{% endif %}>{{village.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">AWC :</label>
+                                <select class="select2 form-control select2-multiple awc" multiple="multiple"  id='awc' name='awc'>
+                                    {% for awc in awc_obj %}
+                                        <option value="{{awc.id}}" {% if awc.id|slugify in awc_ids  %}selected{% endif %}>{{awc.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>   
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="floatingnameInput">Age range:</label>
+                                <select class="select2 form-control age"   id='age' name='age'>
+                                    <option value="1" {% if age|slugify == "1" %}selected{% endif %}>10 >= 19 and 10 <=19</option>
+                                    <option value="2" {% if age|slugify == "2" %}selected{% endif %}>20 Above</option>
+                                </select>
+                            </div>   
+                        </div>
+                    </div>
+                    <div class="row justify-content-end mt-3">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-square btn-success btn-lg float-right">Filter</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" id="reset" class="btn btn-square btn-primary btn-lg float-right">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="rccs-7">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Adolescent location mapping wise report:</h4>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values_ids.items %}
+                            {% for vlu in values %}
+                                <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{vlu}}"/>
+                            {% endfor %}
+                        {% endfor %}
+                        <button type="submit" name='export' id="export" class="btn btn-primary waves-effect justify-content-start" value="adolescent_list">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Adolescent ID</th>
+                                    <th>Adolescent Name</th>
+                                    <th>Adolescent code</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>AWC ID</th>
+                                    <th>AWC Name</th>
+                                    <th>AWC code</th>
+                                    <th>Village ID</th>
+                                    <th>Village Name</th>
+                                    <th>Gramapanchayat ID</th>
+                                    <th>Gramapanchayat Name</th>
+                                    <th>Block ID</th>
+                                    <th>Block Name</th>
+                                    <th>District ID</th>
+                                    <th>District Name</th>
+                                    <th>State ID</th>
+                                    <th>State Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for a in adolescent_list %}
+                                <tr>
+                                    <th>{{a.id}}</th>
+                                    <td>{{a.name}}</td>
+                                    <td>{{a.code}}</td>
+                                    <td>{{a.age_in_completed_years}}</td>
+                                    <td>{{a.get_gender_display|default:''}}</td>
+                                    <td>{{a.awc.id}}</td>
+                                    <td>{{a.awc.name}}</td>
+                                    <td>{{a.awc.code}}</td>
+                                    <td>{{a.awc.village.id}}</td>
+                                    <td>{{a.awc.village.name}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.id}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.name}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.block.id}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.block.name}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.block.district.id}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.block.district.name}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.block.district.state.id}}</td>
+                                    <td>{{a.awc.village.grama_panchayat.block.district.state.name}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+{% endblock %}
+{% block extra_javascript %}
+
+<script type="text/javascript">
+    $("button[id='reset']").on("click", function(event){
+        $('.district').val('');
+        $('.block').val('');
+        $('.age').prop('selectedIndex', 0).change();
+        $('.gramapanchayat').val('');
+        $('.village').val('');
+        $('.awc').val('');
+        this.form.submit();
+    });
+    
+</script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() { 
+        $('.gramapanchayat').select2({placeholder: "Select a GramaPanchayat",})
+        $('.block').select2({placeholder: "Select a Block",}) 
+        $('.village').select2({placeholder: "Select a Village",})
+        $('.awc').select2({placeholder: "Select a AWC",})
+        $('.district').select2({placeholder: "Select a District",})
+        $('select#district').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_district[]': valueSelected
+            }
+            $.ajax({
+                type:"GET",
+                url: '/ajax/report_block_id/',
+                data: data,
+                success:function(result){
+                    $("#block option").remove();
+                    $("#grama_panchayat option").remove();
+                    $("#village option").remove();
+                    $("#awc option").remove();
+                    if(JSON.parse(result) == 0){
+                        $("#block option").remove();
+                        $("#grama_panchayat option").remove();
+                        a = '<option disabled value="">No Block is mapped to this District Name</option>';
+                        $("#block").append(a);
+                        
+                    }
+                    else{
+                        $.each(JSON.parse(result),function(key, value)
+                        {
+                            a = '<option value=' + value['id']+'>' + value['name']+'</option>';
+                            $("#block").append(a);
+                        });
+                    }
+                }
+            });
+        });
+        $('select#block').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_block[]': valueSelected
+            }
+            $.ajax({
+                type: "GET",
+                url: '/ajax/grama_panchayat_id/',
+                data: data,
+                success: function (result) {
+                    $("#grama_panchayat option").remove();
+                    $("#village option").remove();
+                    $("#awc option").remove();
+                    if (JSON.parse(result) == 0) {
+                        $("#grama_panchayat option").remove();
+                        $("#village option").remove();
+                        $("#awc option").remove();
+                        a =
+                        '<option selected disabled value="">No grama_panchayat mapped for this block</option>';
+                        $("#grama_panchayat").append(a);
+                        // b =
+                        // '<option selected disabled value="">No block mapped for this grama_panchayat</option>';
+                        // $("#grama_panchayat").append(b);
+                    } else {
+                        $.each(JSON.parse(result), function (key, value) {
+                            a = '<option value=' + value['id'] + '>' +
+                                value['name'] + '</option>';
+                            $("#grama_panchayat").append(a);
+                        });
+                    }
+                }
+            });
+        });
+        $('select#grama_panchayat').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_grama_panchayat[]': valueSelected
+            }
+            $.ajax({
+                type: "GET",
+                url: '/ajax/village_id/',
+                data: data,
+                success: function (result) {
+                    $("#village option").remove();
+                    $("#awc option").remove();
+                    if (JSON.parse(result) == 0) {
+                        $("#village option").remove();
+                        $("#awc option").remove();
+                        a =
+                        '<option selected disabled value="">No village mapped for this grama panchayat</option>';
+                        $("#village").append(a);
+                        // b =
+                        // '<option selected disabled value="">No grama panchayat mapped for this village</option>';
+                        // $("#village").append(b);
+                    } else {
+                        $.each(JSON.parse(result), function (key, value) {
+                            a = '<option value=' + value['id'] + '>' +
+                                value['name'] + '</option>';
+                            $("#village").append(a);
+                        });
+                    }
+                }
+            });
+        });
+        $('select#village').change(function () {
+            var valueSelected =$(this).val();
+            data = {
+                'selected_village[]': valueSelected
+            }
+            $.ajax({
+                type: "GET",
+                url: '/ajax/awc_id/',
+                data: data,
+                success: function (result) {
+                    $("#awc option").remove();
+                    if (JSON.parse(result) == 0) {
+                        $("#awc option").remove();
+                        a ='<option selected disabled value="">No awc mapped for this village</option>';
+                        $("#awc").append(a);
+                    } else {
+                        $.each(JSON.parse(result), function (key, value) {
+                            a = '<option value=' + value['id'] + '>' +
+                                value['name'] + '</option>';
+                            $("#awc").append(a);
+                        });
+                    }
+                }
+            });
+        });
+    });
+ </script>
+{% endblock %}

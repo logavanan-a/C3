@@ -1,0 +1,51 @@
+<!--Section 16-->
+<!--If any challenge faced related to the operation of the program, then mention it and mention the proposed solution   -->
+
+<div class="row" id="upos-18">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}16{% elif current_site == 3 %}15{% else %}18{% endif %}:</h4>
+                    <p class="card-title-desc">If any challenge faced related to the operation of the program, then mention it and mention the proposed solution</p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="faced_related" class="btn btn-primary waves-effect justify-content-start" value="faced_related">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Challenges (LIST)</th>
+                                    <th>Proposed solution</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for f in faced_related %}
+                                <tr>
+                                    <th>{{f.task.user}}</th>
+                                    <th>{{f.task.start_date|date:"F Y"}}</th>
+                                    <th>{{f.challenges}}</th>
+                                    <td>{{f.proposed_solution}}</td>
+                                    <td>{{f.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

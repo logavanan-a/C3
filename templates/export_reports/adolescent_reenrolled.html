@@ -1,0 +1,61 @@
+<!--Section 9-->
+<!--Details of adolescent re-enrolled in schools  -->
+
+<div class="row" id="rccs-9">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h4 class="card-title">Section {% if current_site == 2 %}10{% else %}9{% endif %}:</h4>
+                    <p class="card-title-desc">Details of adolescent re-enrolled in schools  </p>
+                </div>
+                <form action=""  method="GET" >
+                    <div class="d-flex justify-content-end mb-3"> 
+                        {% for key, values in filter_values.items %}
+                            <input type="hidden" id="__hd1__{{key}}" name='{{key}}' value="{{values}}"/>
+                        {% endfor %}
+                        <button type="submit" name='export' id="adolescent_reenrolled" class="btn btn-primary waves-effect justify-content-start" value="adolescent_reenrolled">
+                             Export
+                         </button>  
+                    </div>
+                </form>
+                {% comment %}<div class="table-rep-plugin">
+                    <div class="table-responsive mb-0" data-pattern="priority-columns">
+                        <table id="tech-companies-1" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name of User</th>
+                                    <th>Month & year</th>
+                                    <th>Name of Panchayat</th>
+                                    <th>Name of Village</th>
+                                    <th>Name of Adolescent</th>
+                                    <th>Gender</th>
+                                    <th>Parent/guardian</th>
+                                    <th>Name of School</th>
+                                    <th>In which Class enrolled</th>
+                                    <th>Created On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in adolescent_reenrolled %}
+                                <tr>
+                                    <th>{{r.task.user}}</th>
+                                    <th>{{r.task.start_date|date:"F Y"}}</th>
+                                    <th>{{r.adolescent_name.awc.village.grama_panchayat}}</th>
+                                    <th>{{r.adolescent_name.awc.village}}</th>
+                                    <th>{{r.adolescent_name}}</th>
+                                    <td>{{r.get_gender_display|default_if_none:""}}</td>
+                                    <td>{{r.parent_guardian_name}}</td>
+                                    <td>{{r.school_name}}</td>                                    
+                                    <td>{{r.get_which_class_enrolled_display}}</td>
+                                    <td>{{r.server_created_on}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>{% endcomment %}
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
